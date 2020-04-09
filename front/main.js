@@ -2,7 +2,6 @@ let app = new Vue({
   el: '#app',
   data: {
     image: '',
-    results_classification: [],
     results_rekognition: [],
   },
   methods: {
@@ -12,7 +11,6 @@ let app = new Vue({
         return;
 
       this.showImage(files[0]);
-      this.results_classification = [];
       this.results_rekognition = [];
     },
     showImage: function(file) {
@@ -29,19 +27,6 @@ let app = new Vue({
           'content-type': 'application/octet-stream',
         }
       };
-
-      axios
-        .post(
-          "https://<<YOUR ENDPOINT URL>>/api/classification",
-          this.image,
-          config
-        )
-        .then(response => {
-            this.results_classification = response.data.split(",");
-        })
-        .catch(error => {
-            console.log(error);
-        });
 
       axios
         .post(
