@@ -1,14 +1,13 @@
-
-# はじめに
-
 **[Qiita記事へのリンク](https://qiita.com/takanassyi/items/9684ce2230bae6683c91
 )**
+
+# はじめに
 
 [まずやってみる機械学習 ～AWS SAGEMAKER/REKOGNITIONとVUEで作る画像判定WEBアプリケーション](http://www.intellilink.co.jp/article/column/ai-ml01.html)を参考にサーバレスの画像分析Webアプリを構築できるソース一式をGitHubに公開した。
 
 参考にしたページとの相違点を下記に示す
 
-- SageMakerで推論モデルの作成からエンドポイントを公開、そしてその結果を利用する部分をカットして簡易ver.にした。
+- 参考にしたページでは SageMaker で推論モデルの作成からエンドポイントを公開、そしてその結果を利用しているが、その部分をカットして簡易ver.にした。
   - 推論のエンドポイントは基本的に立てっぱなしになるため、その間料金が発生してしまうため。
   - API Gateway / rekognition / lambda であれば、基本的に使用しただけの料金になる。
 - 参考ページでは cloud9 経由 で lambda にデプロイしているが、Docker で chalice 環境を構築しそこからデプロイしている。
@@ -103,7 +102,7 @@ aws s3 cp main.js s3://<<YOUR BUCKET NAME>>/ --grants read=uri=http://acs.amazon
 
 ### 【任意】IPによるアクセス制限をつける場合
 
-- アクセス制限→バケットポリシーの項目を編集
+- 作成した S３ バケットのアクセス制限→バケットポリシーの項目を編集
 - 下記の例では接続元IPが`xxx.xxx.xxx.xxx/xx` もしくは `yyy.yyy.yyy.yyy/yy`からのアクセスを許可する
 
 
@@ -134,7 +133,7 @@ aws s3 cp main.js s3://<<YOUR BUCKET NAME>>/ --grants read=uri=http://acs.amazon
 
 ## 6. 動作確認
 
-「プロアパティ」 から 「Static website hosting」に含まれるエンドポイントのURLにアクセスする。
+作成した S3 バケットの「プロパティ」 から 「Static website hosting」に含まれるエンドポイントのURLにアクセスする。
 詳しくは [2-3. 動作確認](http://www.intellilink.co.jp/article/column/ai-ml02.html)の項目を参照。
 `choose file`を選択し、画像をアップロードすると、左側に画像が表示される。`Upload`ボタンを押すと右側に判定結果が表示されれば成功。
 
